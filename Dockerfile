@@ -2,9 +2,9 @@ ARG TAG="20181106-edge"
 
 FROM huggla/alpine-official:$TAG as alpine
 
-ARG BUILDDEPS="build-base postgresql-dev libffi-dev git python3-dev"
+ARG BUILDDEPS="build-base postgresql-dev libffi-dev git python3-dev libsodium-dev"
 ARG DESTDIR="/pgadmin4"
-ARG PGADMIN4_TAG="REL-3_3"
+ARG PGADMIN4_TAG="REL-3_5"
 
 RUN apk --no-cache add $BUILDDEPS \
  && mkdir -p /rootfs/usr/bin /rootfs/usr/lib/python3.6 \
