@@ -36,6 +36,6 @@ RUN yarn --cwd /pgadmin4 install \
  && cp -a /pgadmin4/pgadmin/static/js/generated/* /rootfs/pgadmin4/pgadmin/static/js/generated/ \
  && rm -rf /pgadmin4 /rootfs/pgadmin4/babel.cfg /rootfs/pgadmin4/karma.conf.js /rootfs/pgadmin4/package.json /rootfs/pgadmin4/webpack* /rootfs/pgadmin4/yarn.lock /rootfs/pgadmin4/.e* /rootfs/pgadmin4/.p*
 
-FROM scratch as image
+FROM huggla/busybox:$TAG as image
 
 COPY --from=node /rootfs /apps
