@@ -2,7 +2,7 @@ ARG TAG="20181106-edge"
 
 FROM huggla/alpine-official:$TAG as alpine
 
-ARG BUILDDEPS="build-base postgresql-dev libffi-dev git python3-dev libsodium-dev"
+ARG BUILDDEPS="build-base postgresql-dev libffi-dev git python3-dev libsodium-dev linux-headers"
 ARG DESTDIR="/pgadmin4"
 ARG PGADMIN4_TAG="REL-3_5"
 
