@@ -24,18 +24,18 @@ RUN apk add $BUILDDEPS \
  && cp -a /usr/lib/python3.6/site-packages /rootfs/usr/lib/python3.6/ \
  && apk --purge del $BUILDDEPS
 
-FROM node:6 AS node
+#FROM node:6 AS node
 
-COPY --from=alpine /rootfs /rootfs
-COPY --from=alpine /rootfs /
+#COPY --from=alpine /rootfs /rootfs
+#COPY --from=alpine /rootfs /
 
-RUN yarn --cwd /pgadmin4 install \
- && yarn --cwd /pgadmin4 run bundle \
- && yarn cache clean \
- && mkdir -p /rootfs/pgadmin4/pgadmin/static/js/generated \
- && cp -a /pgadmin4/pgadmin/static/js/generated/* /rootfs/pgadmin4/pgadmin/static/js/generated/ \
- && rm -rf /pgadmin4 /rootfs/pgadmin4/babel.cfg /rootfs/pgadmin4/karma.conf.js /rootfs/pgadmin4/package.json /rootfs/pgadmin4/webpack* /rootfs/pgadmin4/yarn.lock /rootfs/pgadmin4/.e* /rootfs/pgadmin4/.p*
+#RUN yarn --cwd /pgadmin4 install \
+# && yarn --cwd /pgadmin4 run bundle \
+# && yarn cache clean \
+# && mkdir -p /rootfs/pgadmin4/pgadmin/static/js/generated \
+# && cp -a /pgadmin4/pgadmin/static/js/generated/* /rootfs/pgadmin4/pgadmin/static/js/generated/ \
+# && rm -rf /pgadmin4 /rootfs/pgadmin4/babel.cfg /rootfs/pgadmin4/karma.conf.js /rootfs/pgadmin4/package.json /rootfs/pgadmin4/webpack* /rootfs/pgadmin4/yarn.lock /rootfs/pgadmin4/.e* /rootfs/pgadmin4/.p*
 
-FROM huggla/busybox:$TAG as image
+#FROM huggla/busybox:$TAG as image
 
-COPY --from=node /rootfs /apps
+#COPY --from=node /rootfs /apps
