@@ -23,7 +23,7 @@ RUN apk add $BUILDDEPS \
  && cp -a /usr/lib/python3.6/site-packages /rootfs/usr/lib/python3.6/ \
  && apk --purge del $BUILDDEPS
 
-FROM node:6 AS node
+FROM node:8 AS node
 
 COPY --from=alpine /rootfs /rootfs
 COPY --from=alpine /rootfs /
