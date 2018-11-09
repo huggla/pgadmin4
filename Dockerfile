@@ -18,9 +18,9 @@ RUN apk --no-cache add $BUILDDEPS \
  && cp -a /usr/bin/gunicorn /rootfs/usr/bin/ \
  && rm -rf $buildDir /rootfs$DESTDIR/regression /rootfs$DESTDIR/pgadmin/feature_tests \
  && find /rootfs$DESTDIR -name tests -type d | xargs rm -rf \
- && mv /rootfs$DESTDIR / \
+ && mv /rootfs$DESTDIR $DESTDIR \
  && python3.6 -O -m compileall $DESTDIR \
- && mv $DESTDIR /rootfs/ \
+ && mv $DESTDIR /rootfs$DESTDIR \
  && cp -a /usr/lib/python3.6/site-packages /rootfs/usr/lib/python3.6/ \
  && apk --no-cache --purge del $BUILDDEPS
 
