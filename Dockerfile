@@ -6,7 +6,7 @@ ARG BUILDDEPS="build-base postgresql-dev libffi-dev git python3-dev libsodium-de
 ARG DESTDIR="/pgadmin4"
 ARG PGADMIN4_TAG="REL-3_5"
 
-RUN apk --no-cache add $BUILDDEPS \
+RUN apk add $BUILDDEPS \
  && mkdir -p /rootfs/usr/bin /rootfs/usr/lib/python3.6 \
  && buildDir="$(mktemp -d)" \
  && cd $buildDir \
@@ -22,7 +22,7 @@ RUN apk --no-cache add $BUILDDEPS \
  && python3.6 -O -m compileall $DESTDIR \
  && mv $DESTDIR /rootfs$DESTDIR \
  && cp -a /usr/lib/python3.6/site-packages /rootfs/usr/lib/python3.6/ \
- && apk --no-cache --purge del $BUILDDEPS
+ && apk --purge del $BUILDDEPS
 
 FROM node:6 AS node
 
