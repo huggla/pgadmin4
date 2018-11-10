@@ -1,4 +1,4 @@
-ARG TAG="20181106-edge"
+ARG TAG="20181108-edge"
 
 FROM huggla/alpine-official:$TAG as alpine
 
@@ -23,7 +23,7 @@ RUN apk add $BUILDDEPS \
  && cp -a /usr/lib/python3.6/site-packages /rootfs/usr/lib/python3.6/ \
  && apk --purge del $BUILDDEPS
 
-FROM node:8 AS node
+FROM node AS node
 
 COPY --from=alpine /rootfs /rootfs
 COPY --from=alpine /rootfs /
