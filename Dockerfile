@@ -18,7 +18,7 @@ RUN apk add $BUILDDEPS \
  && rm -rf $buildDir /rootfs/pgadmin4/regression /rootfs/pgadmin4/pgadmin/feature_tests \
  && find /rootfs/pgadmin4 -name tests -type d | xargs rm -rf \
  && mv /rootfs/pgadmin4 /pgadmin4 \
- && python3.6 -O -m compileall /pgadmin4 \
+ && python3.6 -OO -m compileall /pgadmin4 \
  && mv /pgadmin4 /rootfs/pgadmin4 \
  && cp -a /usr/lib/python3.6/site-packages /rootfs/usr/lib/python3.6/ \
  && apk --purge del $BUILDDEPS
