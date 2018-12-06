@@ -1,18 +1,18 @@
 ARG TAG="20181204"
 
-FROM huggla/alpine-official:$TAG as alpine
+FROM huggla/python2.7-alpine:$TAG as alpine
 
-ARG BUILDDEPS="build-base postgresql-dev libffi-dev git python2-dev py2-pip libsodium-dev linux-headers"
+ARG BUILDDEPS="build-base postgresql-dev libffi-dev git libsodium-dev linux-headers"
 ARG PGADMIN4_TAG="REL-3_6"
 
 RUN apk add $BUILDDEPS \
  && mkdir -p /rootfs/usr/bin /rootfs/usr/lib/python2.7 \
  && buildDir="$(mktemp -d)" \
  && cd $buildDir \
- && pip2 --no-cache-dir install --upgrade pip \
- && pip2 --no-cache-dir install gunicorn \
+ && pip --no-cache-dir install --upgrade pip \
+ && pip --no-cache-dir install gunicorn \
  && git clone --branch $PGADMIN4_TAG --depth 1 https://git.postgresql.org/git/pgadmin4.git \
- && pip2 install --no-cache-dir -r $buildDir/pgadmin4/requirements.txt \
+ && pip install --no-cache-dir -r $buildDir/pgadmin4/requirements.txt \
  && cp -a $buildDir/pgadmin4/web /rootfs/pgadmin4 \
  && cp -a /usr/bin/gunicorn /rootfs/usr/bin/ \
  && rm -rf $buildDir /rootfs/pgadmin4/regression /rootfs/pgadmin4/pgadmin/feature_tests \
@@ -20,7 +20,7 @@ RUN apk add $BUILDDEPS \
  && mv /rootfs/pgadmin4 /pgadmin4 \
  && python2.7 -OO -m compileall /pgadmin4 \
  && mv /pgadmin4 /rootfs/pgadmin4 \
- && cp -a /usr/lib/python2.7/site-packages /rootfs/usr/lib/python2.7/ \
+ && cp -a /usr/local/lib/python2.7/site-packages /rootfs/usr/lib/python2.7/ \
  && apk --purge del $BUILDDEPS
 
 FROM node AS node
