@@ -15,10 +15,10 @@ RUN apk add $BUILDDEPS \
  && pip install --no-cache-dir -r $buildDir/pgadmin4/requirements.txt \
  && cp -a $buildDir/pgadmin4/web /rootfs/pgadmin4 \
  && cp -a /usr/local/bin/gunicorn /rootfs/usr/bin/ \
- && rm -rf $buildDir /rootfs/pgadmin4/regression /rootfs/pgadmin4/pgadmin/feature_tests \
+# && rm -rf $buildDir /rootfs/pgadmin4/regression /rootfs/pgadmin4/pgadmin/feature_tests \
  && find /rootfs/pgadmin4 -name tests -type d | xargs rm -rf \
  && mv /rootfs/pgadmin4 /pgadmin4 \
-# && python2.7 -OO -m compileall /pgadmin4 \
+ && python2.7 -OO -m compileall /pgadmin4 \
  && mv /pgadmin4 /rootfs/pgadmin4 \
  && cp -a /usr/local/lib/python2.7/site-packages /rootfs/usr/lib/python2.7/ \
  && apk --purge del $BUILDDEPS
