@@ -1,5 +1,6 @@
 ARG TAG="20181204"
 
+FROM huggla/pyinstaller-alpine:$TAG as pyinstaller
 FROM huggla/python2.7-alpine:$TAG as alpine
 
 ARG BUILDDEPS="build-base postgresql-dev libffi-dev git libsodium-dev linux-headers"
@@ -19,8 +20,26 @@ RUN apk add $BUILDDEPS \
 # && rm -rf $buildDir /rootfs/pgadmin4/regression /rootfs/pgadmin4/pgadmin/feature_tests \
 # && find /rootfs/pgadmin4 -name tests -type d | xargs rm -rf \
  && mv -f /rootfs/pgadmin4 /pgadmin4
-# && cd /pgadmin4 \
-# && /pyinstaller/pyinstaller.sh -y -F --clean pgAdmin4.py
+
+ARG PIP_PACKAGES="pycrypto"
+ARG PYINSTALLER_TAG="v3.4"
+
+COPY --from=pyinstaller /pyinstaller /pyinstaller
+
+RUN apk add zlib-dev musl-dev libc-dev gcc git pwgen upx tk tk-dev build-base binutils \
+ && pip --no-cache-dir install $PIP_PACKAGES \
+ && git clone --depth 1 --single-branch --branch $PYINSTALLER_TAG https://github.com/pyinstaller/pyinstaller.git /tmp/pyinstaller \
+ && cd /tmp/pyinstaller/bootloader \
+ && python ./waf configure --no-lsb all \
+ && pip --no-cache-dir install .. \
+ && rm -Rf /tmp/pyinstaller \
+ && chmod a+x /pyinstaller/*
+ 
+WORKDIR /pgadmin4
+
+ENV PYTHONOPTIMIZE="2"
+
+RUN /pyinstaller/pyinstaller.sh -y -F --clean pgAdmin4.py
 # && python2.7 -OO -m compileall /pgadmin4 \
 # && mv /pgadmin4 /rootfs/pgadmin4 \
 # && cp -a /usr/local/lib/python2.7/site-packages /rootfs/usr/lib/python2.7/ \
