@@ -14,6 +14,7 @@ RUN apk add $BUILDDEPS \
  && pip --no-cache-dir install gunicorn \
  && git clone --branch $PGADMIN4_TAG --depth 1 https://git.postgresql.org/git/pgadmin4.git \
  && pip install --no-cache-dir -r $buildDir/pgadmin4/requirements.txt \
+ && sed -i 's/SERVER_MODE = True/SERVER_MODE = False/' $buildDir/pgadmin4/web/config.py \
  && cp -a $buildDir/pgadmin4/web /rootfs/pgadmin4 \
  && cp -a /usr/local/bin/gunicorn /rootfs/usr/bin/ \
  && cd / \
