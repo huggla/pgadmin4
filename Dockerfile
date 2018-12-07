@@ -16,10 +16,10 @@ RUN apk add $BUILDDEPS \
  && cp -a $buildDir/pgadmin4/web /rootfs/pgadmin4 \
  && cp -a /usr/local/bin/gunicorn /rootfs/usr/bin/ \
  && cd / \
- && rm -rf $buildDir /rootfs/pgadmin4/regression /rootfs/pgadmin4/pgadmin/feature_tests \
- && find /rootfs/pgadmin4 -name tests -type d | xargs rm -rf \
- && mv -f /rootfs/pgadmin4 /src \
- && cd /src \
+# && rm -rf $buildDir /rootfs/pgadmin4/regression /rootfs/pgadmin4/pgadmin/feature_tests \
+# && find /rootfs/pgadmin4 -name tests -type d | xargs rm -rf \
+ && mv -f /rootfs/pgadmin4 /pgadmin4 \
+ && cd /pgadmin4 \
  && /pyinstaller/pyinstaller.sh -y -F --clean pgAdmin4.py
 # && python2.7 -OO -m compileall /pgadmin4 \
 # && mv /pgadmin4 /rootfs/pgadmin4 \
