@@ -1,6 +1,6 @@
 ARG TAG="20181204"
 
-FROM huggla/pyinstaller-alpine:$TAG as alpine
+FROM huggla/python2.7-alpine:$TAG as alpine
 
 ARG BUILDDEPS="build-base postgresql-dev libffi-dev git libsodium-dev linux-headers"
 ARG PGADMIN4_TAG="REL-3_6"
@@ -18,9 +18,9 @@ RUN apk add $BUILDDEPS \
  && cd / \
 # && rm -rf $buildDir /rootfs/pgadmin4/regression /rootfs/pgadmin4/pgadmin/feature_tests \
 # && find /rootfs/pgadmin4 -name tests -type d | xargs rm -rf \
- && mv -f /rootfs/pgadmin4 /pgadmin4 \
- && cd /pgadmin4 \
- && /pyinstaller/pyinstaller.sh -y -F --clean pgAdmin4.py
+ && mv -f /rootfs/pgadmin4 /pgadmin4
+# && cd /pgadmin4 \
+# && /pyinstaller/pyinstaller.sh -y -F --clean pgAdmin4.py
 # && python2.7 -OO -m compileall /pgadmin4 \
 # && mv /pgadmin4 /rootfs/pgadmin4 \
 # && cp -a /usr/local/lib/python2.7/site-packages /rootfs/usr/lib/python2.7/ \
