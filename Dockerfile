@@ -40,7 +40,7 @@ WORKDIR /pgadmin4
 
 ENV PYTHONOPTIMIZE="2"
 
-RUN /pyinstaller/pyinstaller.sh -y -F --clean pgAdmin4.py setup.py
+#RUN /pyinstaller/pyinstaller.sh -y -F --clean pgAdmin4.py setup.py
 # && python2.7 -OO -m compileall /pgadmin4 \
 # && mv /pgadmin4 /rootfs/pgadmin4 \
 # && cp -a /usr/local/lib/python2.7/site-packages /rootfs/usr/lib/python2.7/ \
