@@ -11,5 +11,5 @@ RUN apk add $BUILDDEPS \
  && cd $buildDir \
  && pip3 --no-cache-dir install --upgrade pip \
  && pip3 --no-cache-dir install gunicorn \
- && git clone --branch $PGADMIN4_TAG --depth 1 https://git.postgresql.org/git/pgadmin4.git; \
- pip3 install --no-cache-dir -r $buildDir/pgadmin4/requirements.txt
+ && git clone --branch $PGADMIN4_TAG --depth 1 https://git.postgresql.org/git/pgadmin4.git || true \
+ && pip3 install --no-cache-dir -r $buildDir/pgadmin4/requirements.txt || true
