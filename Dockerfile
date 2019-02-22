@@ -1,9 +1,9 @@
-ARG TAG="20181204"
+ARG TAG="20190220"
 
 FROM huggla/python2.7-alpine:$TAG as alpine
 
 ARG BUILDDEPS="build-base postgresql-dev libffi-dev git libsodium-dev linux-headers"
-ARG PGADMIN4_TAG="REL-3_6"
+ARG PGADMIN4_TAG="REL-4_2"
 
 RUN apk add $BUILDDEPS \
  && mkdir -p /rootfs/usr/bin /rootfs/usr/lib/python2.7 \
