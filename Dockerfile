@@ -1,6 +1,6 @@
 ARG TAG="20190220"
 
-FROM huggla/python2.7-alpine:$TAG as alpine
+FROM huggla/python2.7-alpine as alpine
 
 ARG BUILDDEPS="build-base postgresql-dev libffi-dev git libsodium-dev linux-headers"
 ARG PGADMIN4_TAG="REL-4_2"
@@ -9,7 +9,6 @@ RUN apk add $BUILDDEPS \
  && mkdir -p /rootfs/usr/bin /rootfs/usr/lib/python2.7 \
  && buildDir="$(mktemp -d)" \
  && cd $buildDir \
- && pip --no-cache-dir install --upgrade pip \
  && pip --no-cache-dir install gunicorn \
  && git clone --branch $PGADMIN4_TAG --depth 1 https://git.postgresql.org/git/pgadmin4.git \
  && pip install --no-cache-dir -r $buildDir/pgadmin4/requirements.txt \
@@ -21,6 +20,7 @@ RUN apk add $BUILDDEPS \
  && mv /rootfs/pgadmin4 /pgadmin4 \
  && python2.7 -OO -m compileall /pgadmin4 \
  && mv /pgadmin4 /rootfs/pgadmin4 \
+ && pip --no-cache-dir uninstall pip \
  && cp -a /usr/local/lib/python2.7/site-packages /rootfs/usr/lib/python2.7/ \
  && apk --purge del $BUILDDEPS
 
