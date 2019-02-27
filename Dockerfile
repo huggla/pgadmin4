@@ -12,7 +12,7 @@ RUN apk add $BUILDDEPS \
  && pip3 --no-cache-dir install --upgrade pip \
  && pip3 --no-cache-dir install gunicorn \
  && git clone --branch $PGADMIN4_TAG --depth 1 https://git.postgresql.org/git/pgadmin4.git \
- && pip3 install --no-cache-dir -r $buildDir/pgadmin4/requirements.txt \
+ && pip3 --no-cache-dir install -r $buildDir/pgadmin4/requirements.txt \
  && cp -a $buildDir/pgadmin4/web /rootfs/pgadmin4 \
  && cp -a /usr/bin/gunicorn /rootfs/usr/bin/ \
  && cd / \
@@ -21,7 +21,7 @@ RUN apk add $BUILDDEPS \
  && mv /rootfs/pgadmin4 /pgadmin4 \
  && python3.6 -OO -m compileall /pgadmin4 \
  && mv /pgadmin4 /rootfs/pgadmin4 \
- && pip uninstall --yes pip \
+ && pip3 --no-cache-dir uninstall --yes pip \
  && cp -a /usr/lib/python3.6/site-packages /rootfs/usr/lib/python3.6/ \
  && apk --purge del $BUILDDEPS
 
